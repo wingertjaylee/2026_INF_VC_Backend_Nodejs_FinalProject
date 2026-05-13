@@ -61,7 +61,7 @@ const getFunFact = async (req, res) => {
     const dbState = await State.findOne({ stateCode: code }).exec();
 
     if (!dbState || !dbState.funfacts || dbState.funfacts.length === 0) {
-        return res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Facts found for ${state.state}` });
     }
 
     res.json(dbState.funfacts);
@@ -79,7 +79,7 @@ const getRandomFunFact = async (req, res) => {
     const dbState = await State.findOne({ stateCode: code }).exec();
 
     if (!dbState || !dbState.funfacts || dbState.funfacts.length === 0) {
-        return res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Facts found for ${state.state}` });
     }
 
     const randomIndex = Math.floor(Math.random() * dbState.funfacts.length);
@@ -177,13 +177,13 @@ const updateFunFact = async (req, res) => {
     const dbState = await State.findOne({ stateCode: code }).exec();
 
     if (!dbState || !dbState.funfacts || dbState.funfacts.length === 0) {
-        return res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Facts found for ${state.state}` });
     }
 
     const idx = index - 1;
 
     if (idx < 0 || idx >= dbState.funfacts.length) {
-        return res.status(404).json({ message: `No Fun Fact found at that index for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Fact found at that index for ${state.state}` });
     }
 
     dbState.funfacts[idx] = funfact;
@@ -210,13 +210,13 @@ const deleteFunFact = async (req, res) => {
     const dbState = await State.findOne({ stateCode: code }).exec();
 
     if (!dbState || !dbState.funfacts || dbState.funfacts.length === 0) {
-        return res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Facts found for ${state.state}` });
     }
 
     const idx = index - 1;
 
     if (idx < 0 || idx >= dbState.funfacts.length) {
-        return res.status(404).json({ message: `No Fun Fact found at that index for ${state.state}` });
+        return res.status(400).json({ message: `No Fun Fact found at that index for ${state.state}` });
     }
 
     dbState.funfacts.splice(idx, 1);
