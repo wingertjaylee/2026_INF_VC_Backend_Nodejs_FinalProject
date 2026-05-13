@@ -23,16 +23,7 @@ app.use('/states', require('./routes/states'));
 
 // 404 handler
 app.use((req, res) => {
-
-    res.status(404);
-
-    if (req.accepts('html')) {
-        res.type('html').send('<h1>404 Not Found</h1>');
-    } else if (req.accepts('json')) {
-        res.json({ error: '404 Not Found' });
-    } else {
-        res.type('html').send('<h1>404 Not Found</h1>');
-    }
+    res.status(404).type('html').send('<h1>404 Not Found</h1>');
 });
 
 // Connect to DB and start server

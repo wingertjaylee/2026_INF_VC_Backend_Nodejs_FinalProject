@@ -32,18 +32,22 @@ const getAllStates = async (req, res) => {
 // GET /states/:state
 const getState = async (req, res) => {
     const code = req.params.state.toUpperCase();
-    const state = findState(code);
+    const stateInfo = findState(code);
 
-    if (!state) {
+    if (!stateInfo) {
         return res.status(400).json({ message: "Invalid state abbreviation parameter" });
     }
 
     const dbState = await State.findOne({ stateCode: code }).exec();
-    state.funfacts = dbState?.funfacts || [];
 
+    const response = {
+        ...stateInfo,
+        funfacts: dbState?.funfacts || []
+    };
 
-    res.json(state);
+    res.json(response);
 };
+
 
 // GET /states/:state/funfact
 const getFunFact = async (req, res) => {
