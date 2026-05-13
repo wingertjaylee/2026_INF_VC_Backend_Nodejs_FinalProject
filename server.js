@@ -24,7 +24,7 @@ app.use('/states', require('./routes/states'));
 
 // 404 handler
 app.use((req, res) => {
-    res.status(404).type('html').send('<h1>404 Not Found</h1>');
+  res.status(404).sendFile(__dirname + '/404.html');
 });
 
 // Connect to DB and start server
