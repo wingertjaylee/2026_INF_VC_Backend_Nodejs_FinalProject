@@ -20,13 +20,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 // API Routes
 app.use('/states', require('./routes/states'));
 
-// 404 Handler
+// 404 handler - MUST be last
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: '404 - Route Not Found',
-    requestedUrl: req.originalUrl
-  });
+  res.status(404);
+
+  res.type('html');
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <title>404 Not Found</title>
+      </head>
+      <body>
+        <h1>404 - Page Not Found</h1>
+        <p>The requested endpoint does not exist.</p>
+      </body>
+    </html>
+  `);
 });
 
 // Connect to DB
