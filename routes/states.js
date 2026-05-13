@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const statesController = require('../Controllers/statesController');
+const statesController = require('../controllers/statesController');
 
 // GET routes
 router.get('/', statesController.getAllStates);
