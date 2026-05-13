@@ -39,7 +39,7 @@ app.use((req, res) => {
   `);
 });
 });
-});
+
 
 // Connect to DB and start server
 connectDB();
