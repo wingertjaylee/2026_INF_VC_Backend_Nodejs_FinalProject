@@ -25,6 +25,9 @@ app.use('/states', require('./routes/states'));
 // 404 handler
 app.use((req, res) => {
   res.status(404).sendFile(__dirname + '/index.html');
+  app.use((req, res) => {
+  res.status(404).sendFile(__dirname + "/404.html");
+});
 });
 
 // Connect to DB and start server
