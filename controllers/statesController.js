@@ -20,8 +20,11 @@ const getAllStates = async (req, res) => {
 
     states = states.map(st => {
         const match = dbStates.find(db => db.stateCode === st.code);
-        return match ? { ...st, funfacts: match.funfacts } : st;
-    });
+        return {
+            ...st, 
+            funfacts: match?.funfacts || []
+    };
+});
 
     res.json(states);
 };
@@ -36,7 +39,8 @@ const getState = async (req, res) => {
     }
 
     const dbState = await State.findOne({ stateCode: code }).exec();
-    if (dbState) state.funfacts = dbState.funfacts;
+    state.funfacts = dbState?.funfacts || [];
+
 
     res.json(state);
 };
@@ -94,10 +98,19 @@ const getNickname = (req, res) => {
 };
 
 const getPopulation = (req, res) => {
-    const state = findState(req.params.state);
-    if (!state) return res.status(400).json({ message: "Invalid state abbreviation parameter" });
+    const code = req.params.state.toUpperCase();
+    const state = findState(code);
 
-    res.json({ state: state.state, population: state.population });
+    if (!state) {
+        return res.status(400).json({ message: "Invalid state abbreviation parameter" });
+    }
+
+    const formatted = state.population.toLocaleString("en-US");
+
+    res.json({
+        state: state.state,
+        population: formatted
+    });
 };
 
 const getAdmission = (req, res) => {
